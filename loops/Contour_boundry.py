@@ -1,11 +1,20 @@
 import cv2
 import numpy as np
 from matplotlib import pyplot as plt
+from PIL import Image
 
-img = cv2.imread('r_loop.png')
+img = cv2.imread('r_copy.png')
+
+#remove some red haze (generally in the R value from 1 to 30)
+for i in range(img.shape[0]):
+    for j in range(img.shape[1]):
+        if img.item(i, j, 2) < 15:
+            img.itemset((i, j, 2), 0)
+
 rgb_img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 red = rgb_img[:, :, 0]
 height, width, channels = rgb_img.shape
+
 
 #create mask and flood fill
 mask = np.zeros((height+2, width+2), np.uint8)
@@ -18,7 +27,7 @@ kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(7,7))
 omask = cv2.morphologyEx(1-mask, cv2.MORPH_OPEN, kernel)
 #plt.imshow(omask)
 #plt.colorbar()
-plt.show()
+#plt.show()
 
 #find contours
 contours, hierarchy = cv2.findContours(omask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE )
