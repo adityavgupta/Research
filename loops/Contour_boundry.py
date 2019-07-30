@@ -27,11 +27,11 @@ contours, hierarchy = cv2.findContours(omask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SI
 #largest_area = 0
 for contour in contours:
     area = cv2.contourArea(contour)
-    if area > 4000:
+    if area > 1500:
     	print(area)
     	x, y, w, h = cv2.boundingRect(contour)
     	cv2.drawContours(rgb_img, [contour], -1, (0, 128, 128), 1)
-    	#cv2.rectangle(rgb_img, (x,y), (x+w, y+h), (128, 0, 0), 1)
+    	cv2.rectangle(rgb_img, (x,y), (x+w, y+h), (128, 0, 0), 1)
 
 '''x,y,w,h = cv2.boundingRect(largest_contour)
 cv2.drawContours(rgb_img, [largest_contour], -1, (0, 128, 128), 1)
